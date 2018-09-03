@@ -1,0 +1,137 @@
+<template>
+    <v-app class="main" style="padding-bottom: 40px;">
+        <v-content>
+            <v-container fluid style="padding:0; background-color: #eee;">
+                <v-layout row wrap>
+                    <v-flex xs12>
+                        <v-img
+                                :src="`/storage/main.jpg`"
+                        ></v-img>
+                    </v-flex>
+                    <v-flex xs12 style="margin-top: -30px; padding-left: 10px;">
+                        <v-layout row wrap>
+                            <v-flex xs6 class="box-card">
+                                <router-link to="/services">
+                                    <v-card color="white" class="card-serivce" hover>
+                                        <v-avatar size="96">
+                                            <img
+                                                    src="/storage/sports.jpg"
+                                                    alt=""
+                                            >
+                                        </v-avatar>
+                                        <v-card-text class="card-service-text">
+                                            <h3>체육시설</h3>
+                                            <p>공공체육시설 예약하기</p>
+                                        </v-card-text>
+                                    </v-card>
+                                </router-link>
+                            </v-flex>
+                            <v-flex xs6 class="box-card">
+                                <v-card color="white" class="card-serivce" hover>
+                                    <v-avatar size="96">
+                                        <img
+                                                src="/storage/institution.jpg"
+                                                alt=""
+                                        >
+                                    </v-avatar>
+                                    <v-card-text class="card-service-text">
+                                        <h3>시설대관</h3>
+                                        <p>공공시설 대관하기</p>
+                                    </v-card-text>
+                                </v-card>
+                            </v-flex>
+                            <v-flex xs6 class="box-card">
+                                <v-card color="white" class="card-serivce" hover>
+                                    <v-avatar size="96">
+                                        <img
+                                                src="/storage/education.jpg"
+                                                alt=""
+                                        >
+                                    </v-avatar>
+                                    <v-card-text class="card-service-text">
+                                        <h3>교육</h3>
+                                        <p>교육 신청하기</p>
+                                    </v-card-text>
+                                </v-card>
+                            </v-flex><v-flex xs6 class="box-card">
+                            <v-card color="white" class="card-serivce" hover>
+                                <v-avatar size="96">
+                                    <img
+                                            src="/storage/culture.jpg"
+                                            alt=""
+                                    >
+                                </v-avatar>
+                                <v-card-text class="card-service-text">
+                                    <h3>문화행사</h3>
+                                    <p>문화행사 참여하기</p>
+                                </v-card-text>
+                            </v-card>
+                        </v-flex>
+                            <v-flex xs6 class="box-card">
+                                <v-card color="white" class="card-serivce" hover>
+                                    <v-avatar size="96">
+                                        <img
+                                                src="/storage/medical.jpg"
+                                                alt=""
+                                        >
+                                    </v-avatar>
+                                    <v-card-text class="card-service-text">
+                                        <h3>진료</h3>
+                                        <p>진료 예약하기</p>
+                                    </v-card-text>
+                                </v-card>
+                            </v-flex>
+                            <v-flex xs6 class="box-card">
+                                <v-card color="white" class="card-serivce" hover>
+                                    <v-layout
+                                            align-center
+                                            justify-space-around
+                                            wrap
+                                    >
+                                        <v-avatar size="96" color="teal">
+                                            <v-icon large color="white">favorite</v-icon>
+                                        </v-avatar>
+                                    </v-layout>
+                                    <v-card-text class="card-service-text">
+                                        <h3>즐겨찾기</h3>
+                                        <p>내가 한 즐겨찾기</p>
+                                    </v-card-text>
+                                </v-card>
+                            </v-flex>
+                        </v-layout>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+        </v-content>
+    </v-app>
+</template>
+
+<script>
+    export default {
+        name: "Home"
+    }
+</script>
+
+<style scoped>
+    * {
+        text-decoration: none;
+    }
+
+    .box-card {
+        padding-right: 10px;
+        padding-top: 10px;
+    }
+
+    .card-serivce {
+        text-align: center;
+        padding-top: 20px;
+    }
+
+    .card-serivce .card-service-text {
+        padding-bottom: 5px;
+    }
+
+    .card-serivce:hover {
+        background-color: #eee !important;
+    }
+</style>
