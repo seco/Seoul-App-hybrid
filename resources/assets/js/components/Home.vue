@@ -11,23 +11,21 @@
                     <v-flex xs12 style="margin-top: -30px; padding-left: 10px;">
                         <v-layout row wrap>
                             <v-flex xs6 class="box-card">
-                                <router-link to="/services">
-                                    <v-card color="white" class="card-serivce" hover>
-                                        <v-avatar size="96">
-                                            <img
-                                                    src="/storage/sports.jpg"
-                                                    alt=""
-                                            >
-                                        </v-avatar>
-                                        <v-card-text class="card-service-text">
-                                            <h3>체육시설</h3>
-                                            <p>공공체육시설 예약하기</p>
-                                        </v-card-text>
-                                    </v-card>
-                                </router-link>
+                                <v-card color="white" class="card-serivce" hover @click.native="goToServices('체육시설')">
+                                    <v-avatar size="96">
+                                        <img
+                                                src="/storage/sports.jpg"
+                                                alt=""
+                                        >
+                                    </v-avatar>
+                                    <v-card-text class="card-service-text">
+                                        <h3>체육시설</h3>
+                                        <p>공공체육시설 예약하기</p>
+                                    </v-card-text>
+                                </v-card>
                             </v-flex>
                             <v-flex xs6 class="box-card">
-                                <v-card color="white" class="card-serivce" hover>
+                                <v-card color="white" class="card-serivce" hover @click.native="goToServices('시설대관')">
                                     <v-avatar size="96">
                                         <img
                                                 src="/storage/institution.jpg"
@@ -41,7 +39,7 @@
                                 </v-card>
                             </v-flex>
                             <v-flex xs6 class="box-card">
-                                <v-card color="white" class="card-serivce" hover>
+                                <v-card color="white" class="card-serivce" hover @click.native="goToServices('교육')">
                                     <v-avatar size="96">
                                         <img
                                                 src="/storage/education.jpg"
@@ -49,12 +47,12 @@
                                         >
                                     </v-avatar>
                                     <v-card-text class="card-service-text">
-                                        <h3>교육</h3>
+                                        <h3>교육신청</h3>
                                         <p>교육 신청하기</p>
                                     </v-card-text>
                                 </v-card>
                             </v-flex><v-flex xs6 class="box-card">
-                            <v-card color="white" class="card-serivce" hover>
+                            <v-card color="white" class="card-serivce" hover @click.native="goToServices('문화행사')">
                                 <v-avatar size="96">
                                     <img
                                             src="/storage/culture.jpg"
@@ -68,7 +66,7 @@
                             </v-card>
                         </v-flex>
                             <v-flex xs6 class="box-card">
-                                <v-card color="white" class="card-serivce" hover>
+                                <v-card color="white" class="card-serivce" hover @click.native="goToServices('진료')">
                                     <v-avatar size="96">
                                         <img
                                                 src="/storage/medical.jpg"
@@ -76,13 +74,13 @@
                                         >
                                     </v-avatar>
                                     <v-card-text class="card-service-text">
-                                        <h3>진료</h3>
+                                        <h3>진료예약</h3>
                                         <p>진료 예약하기</p>
                                     </v-card-text>
                                 </v-card>
                             </v-flex>
                             <v-flex xs6 class="box-card">
-                                <v-card color="white" class="card-serivce" hover>
+                                <v-card color="white" class="card-serivce" hover @click.native="goToServices('즐겨찾기')">
                                     <v-layout
                                             align-center
                                             justify-space-around
@@ -107,8 +105,20 @@
 </template>
 
 <script>
+
     export default {
-        name: "Home"
+        name: "Home",
+        computed: {
+
+        },
+        methods: {
+            goToServices : function(category) {
+                console.log(category);
+                this.$store.state.category = category;
+                console.log(this.$store.state.category);
+                this.$router.push('services');
+            }
+        }
     }
 </script>
 
