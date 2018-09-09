@@ -12,8 +12,6 @@ import store from './store';
 import router from './router';
 
 import Vuetify from 'vuetify';
-import 'vuetify/dist/vuetify.min.css';
-
 
 import App from './components/App.vue';
 

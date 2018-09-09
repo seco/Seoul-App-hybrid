@@ -1,8 +1,8 @@
 <template>
-    <v-app class="main" style="padding-bottom: 40px;">
+    <v-app class="main">
         <v-content>
             <v-container fluid style="padding:0; background-color: #eee;">
-                <v-layout row wrap>
+                <v-layout row wrap style="padding-bottom: 20px;">
                     <v-flex xs12>
                         <v-img
                                 :src="`/storage/main.jpg`"
@@ -20,7 +20,7 @@
                                     </v-avatar>
                                     <v-card-text class="card-service-text">
                                         <h3>체육시설</h3>
-                                        <p>공공체육시설 예약하기</p>
+                                        <p>체육시설 예약하기</p>
                                     </v-card-text>
                                 </v-card>
                             </v-flex>
@@ -99,13 +99,20 @@
                         </v-layout>
                     </v-flex>
                 </v-layout>
+
+                <v-layout>
+                    <v-flex
+                        xs12
+                        style="text-align: center; height:30px; line-height:30px; vertical-align: middle; background-color: #aaa;"
+                    ><span style="color:white;">Copyright @ co-ravel</span>
+                    </v-flex>
+                </v-layout>
             </v-container>
         </v-content>
     </v-app>
 </template>
 
 <script>
-
     export default {
         name: "Home",
         computed: {
