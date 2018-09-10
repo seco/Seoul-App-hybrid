@@ -66,7 +66,7 @@
                                 >
                                     <v-list-tile-content>
                                         <v-list-tile-title>{{ item['SVCNM'] }}</v-list-tile-title>
-                                        <v-list-tile-sub-title>{{ item['PLACENM'] }}</v-list-tile-sub-title>
+                                        <v-list-tile-sub-title>({{ item['AREANM'] }}) {{ item['PLACENM'] }}</v-list-tile-sub-title>
                                     </v-list-tile-content>
                                 </v-list-tile>
                                 <v-divider></v-divider>
@@ -86,7 +86,7 @@
                                 @click="getMoreData">
                             <span v-if="isGetMore == 0">더보기</span>
                             <span v-else-if="isGetMore == 1"><v-progress-circular indeterminate color="primary"></v-progress-circular></span>
-                            <span v-else>데이터가 더이상 없습니다</span>
+                            <span v-else>더이상 데이터가 없습니다</span>
                         </v-btn>
                     </v-flex>
                 </v-layout>
@@ -268,6 +268,10 @@
                         console.log(response);
                         for (var idx in response.data.data) {
                             self.ServicesData.push( response.data.data[idx] );
+                        }
+
+                        if( response.data.data.length === 0 ) {
+                            self.isGetMore = 2;
                         }
                     })
                     .catch(function (error) {

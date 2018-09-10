@@ -37,7 +37,9 @@
                     </v-flex>
                 </v-layout>
             </v-container>
+
             <v-container style="padding:0;">
+                <!-- 주소정보 레코드 -->
                 <v-layout>
                     <v-flex xs12 style="background-color:#f9f9f9; border: 1px solid #f1f1f1; border-bottom: 0;">
                         <v-list dense class="pt-0">
@@ -52,12 +54,14 @@
                         </v-list>
                     </v-flex>
                 </v-layout>
+
+                <!-- 기간정보 레코드 -->
                 <v-layout>
                     <v-flex xs12 style="background-color:#f9f9f9; border: 1px solid #f1f1f1; border-bottom: 0;">
                         <v-list dense class="pt-0">
                             <v-list-tile>
                                 <v-list-tile-content>
-                                    <v-list-tile-title>{{ service_api['SVCOPNBGNDT'] }} ~ {{ service_api['SVCOPNENDDT'] }}</v-list-tile-title>
+                                    <v-list-tile-title>{{ service_api['SVCOPNBGNDT'] }} ~ {{ service_api['SVCOPNENDDT'] }} ( {{service_api['V_MIN']}} ~ {{service_api['V_MAX']}} )</v-list-tile-title>
                                 </v-list-tile-content>
                                 <v-list-tile-action>
                                     <v-icon style="color: #6361ff;">calendar_today</v-icon>
@@ -67,7 +71,8 @@
                     </v-flex>
                 </v-layout>
                 <v-layout>
-                    <v-flex xs6 style="background-color:#f9f9f9; border: 1px solid #f1f1f1; border-right: 0;">
+                    <!-- 전화번호 레코드 -->
+                    <v-flex xs6 style="background-color:#f9f9f9; border: 1px solid #f1f1f1; border-bottom: 0; border-right: 0;">
                         <v-list dense class="pt-0">
                             <v-list-tile>
                                 <v-list-tile-content>
@@ -79,7 +84,8 @@
                             </v-list-tile>
                         </v-list>
                     </v-flex>
-                    <v-flex xs6 style="background-color:#f9f9f9; border: 1px solid #f1f1f1;">
+                    <!-- 요금정보 레코드 -->
+                    <v-flex xs6 style="background-color:#f9f9f9; border: 1px solid #f1f1f1; border-bottom: 0;">
                         <v-list dense class="pt-0">
                             <v-list-tile>
                                 <v-list-tile-content>
@@ -98,7 +104,30 @@
             <v-container style="padding:0;">
                 <v-layout>
                     <v-flex xs12>
-                        <div id="map" style="width:100%;height:250px;"></div>
+                        <div id="map" style="width:100%;height:250px;">
+                            <p v-if="!isMapDataExsist" class="text-xs-center" style="vertical-align: middle; line-height: 250px; background-color: #eee;">지도 정보가 없습니다</p>
+                        </div>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+
+            <v-container style="padding:0;">
+                <v-layout>
+                    <v-flex xs12>
+                        <v-expansion-panel>
+                            <v-expansion-panel-content>
+                                <div slot="header">상세설명</div>
+                                <v-card>
+                                    <v-card-text v-html="service_api['DTLCONT']"></v-card-text>
+                                </v-card>
+                            </v-expansion-panel-content>
+                            <v-expansion-panel-content>
+                                <div slot="header">주의사항</div>
+                                <v-card>
+                                    <v-card-text v-html="service_api['NOTICE']"></v-card-text>
+                                </v-card>
+                            </v-expansion-panel-content>
+                        </v-expansion-panel>
                     </v-flex>
                 </v-layout>
             </v-container>
@@ -106,24 +135,16 @@
             <v-container style="padding:0;">
                 <v-layout>
                     <v-flex xs6>
-                        <v-btn block flat style="margin:0; height: 48px; background-color: #eee;">
+                        <v-btn block flat depressed style="margin:0; height: 48px; background-color: #ddd; border-radius: 0;">
                             <v-icon small>call</v-icon>전화하기
                         </v-btn>
                     </v-flex>
                     <v-flex xs6>
-                        <v-btn block flat dark style="margin:0; height: 48px; background-color: #598bf9;">
-                            <v-icon small>bookmark</v-icon>예약하기
-                        </v-btn>
-                    </v-flex>
-                </v-layout>
-            </v-container>
-
-            <v-container style="padding:0;">
-                <v-layout>
-                    <v-flex
-                            xs12
-                            style="text-align: center; height:30px; line-height:30px; vertical-align: middle; background-color: #444;"
-                    ><span style="color:white;">Copyright @ co-ravel</span>
+                        <a target="_blank" :href="service['SVCURL']" style="text-decoration: none;">
+                            <v-btn block flat dark depressed style="margin:0; height: 48px; background-color: #598bf9; border-radius: 0;">
+                                <v-icon small>bookmark</v-icon>예약하기
+                            </v-btn>
+                        </a>
                     </v-flex>
                 </v-layout>
             </v-container>
@@ -140,6 +161,7 @@
                 service_api: [],
                 gradient: 'to top right, rgba(0, 0, 0, 0.7), rgba( 0, 0, 0, 0.7)',
                 isLoading: true,
+                isMapDataExsist: true,
             }
         },
         created: function() {
@@ -157,6 +179,8 @@
 
                     var API_URL = "http://openAPI.seoul.go.kr:8088/414f414a6963686f33316d65547677/json/ListPublicReservationDetail/1/1/";
 
+                    self.service['SVCURL'] = "https://yeyak.seoul.go.kr/mobile/detailView.web?rsvsvcid=" + self.service['SVCID'];
+
                     axios.get(API_URL + self.service['SVCID'])
                         .then(function (response) {
                             self.service_api = response.data.ListPublicReservationDetail.row[0];
@@ -166,12 +190,17 @@
                             self.service_api['SVCOPNBGNDT'] = self.service_api['SVCOPNBGNDT'].replace("00:00:00.0", "");
                             self.service_api['SVCOPNENDDT'] = self.service_api['SVCOPNENDDT'].replace("00:00:00.0", "");
 
+                            self.service_api['DTLCONT'] = self.service_api['DTLCONT'].replace("<pre>", "");
+                            self.service_api['DTLCONT'] = self.service_api['DTLCONT'].replace("</pre>", "");
+
                             if( self.service_api['X'] === '' ) {
                                 naver.maps.Service.geocode({
                                     address: self.service_api['ADRES']
                                 }, function(status, response) {
                                     if (status !== naver.maps.Service.Status.OK) {
-                                        return alert('지도정보가 없습니다');
+                                        self.isMapDataExsist = false;
+                                        self.isLoading = false;
+                                        return;
                                     }
 
                                     var result = response.result, // 검색 결과의 컨테이너
