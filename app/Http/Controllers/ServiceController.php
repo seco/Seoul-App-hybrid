@@ -16,12 +16,12 @@ class ServiceController extends Controller
             $servicies = $servicies->where('MAXCLASSNM', $request->MAXCLASSNM);
         }
         if( $request->has('MINCLASSNM') ) {
-            if ( $request->MINCLASSNM != null ) {
+            if ( $request->MINCLASSNM != null && $request->MINCLASSNM != "모두" ) {
                 $servicies = $servicies->where('MINCLASSNM', $request->MINCLASSNM);
             }
         }
         if( $request->has('AREANM') ) {
-            if ( $request->AREANM != null ) {
+            if ( $request->AREANM != null && $request->AREANM != "모두" ) {
                 $servicies = $servicies->where('AREANM', $request->AREANM);
             }
         }

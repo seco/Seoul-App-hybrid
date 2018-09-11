@@ -114,7 +114,7 @@
             <v-container style="padding:0;">
                 <v-layout>
                     <v-flex xs12>
-                        <v-expansion-panel>
+                        <v-expansion-panel value="1">
                             <v-expansion-panel-content>
                                 <div slot="header">상세설명</div>
                                 <v-card>
@@ -221,6 +221,8 @@
                                         map: map
                                     });
                                     self.isLoading = false;
+
+
                                 });
                             } else {
                                 var mapOptions = {
