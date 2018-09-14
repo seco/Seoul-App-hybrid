@@ -15,6 +15,21 @@
             </v-layout>
         </v-toolbar>
         <v-content>
+            <!--
+            <v-container style="padding:0;">
+                <v-layout wrap>
+                    <v-flex xs12>
+                        <v-carousel>
+                            <v-carousel-item
+                                    v-for="(item, i) in recommend"
+                                    :key="i"
+                                    :src="item.SVCURL"
+                            ></v-carousel-item>
+                        </v-carousel>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+            -->
             <v-container style="background-color: #fff;">
                 <v-layout wrap align-center>
                     <v-flex xs12>
@@ -25,7 +40,6 @@
                              background-color="#aaa"
                              outline
                              v-model="AREANM"
-                             autocomplete
                         ></v-select>
                     </v-flex>
                     <v-flex xs12 style="margin-top: -20px;">
@@ -36,7 +50,6 @@
                             background-color="#aaa"
                             outline
                             v-model="MINCLASSNM"
-                            autocomplete
                         ></v-select>
                     </v-flex>
                     <v-flex xs12 style="margin-top: -20px;">
@@ -178,7 +191,8 @@
                 MINCLASSNM: '',
                 AREANM: '',
                 page: 1,
-                isGetMore: 0
+                isGetMore: 0,
+                recommend: []
             }
         },
         created: function() {
@@ -201,7 +215,17 @@
                     return [];
                 });
 
+            // 추천상품
+            axios.post('/recommend')
+                .then(function (response) {
+                    console.log(response);
 
+                    self.recommend.push( response.data.data );
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    return [];
+                });
 
             this.ServicesData = jArray;
 

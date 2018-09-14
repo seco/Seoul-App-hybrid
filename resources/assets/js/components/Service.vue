@@ -22,6 +22,22 @@
             <v-container v-else style="padding:0;">
                 <v-layout>
                     <v-flex xs12>
+                        <v-img :src="service_api['IMG_PATH']">
+                            <v-layout
+                                    pa-3
+                                    column
+                                    fill-height
+                                    class="white--text"
+                                    style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 140px);"
+                            >
+                                <v-spacer></v-spacer>
+                                <v-flex shrink>
+                                    <div class="body-1">{{ service_api['AREANM'] }}</div>
+                                    <div class="subheading">{{ service_api['SVCNM'] }}</div>
+                                </v-flex>
+                            </v-layout>
+                        </v-img>
+                        <!--
                         <v-jumbotron
                                 :gradient="gradient"
                                 :src="service_api['IMG_PATH']"
@@ -34,6 +50,7 @@
                                 </v-layout>
                             </v-container>
                         </v-jumbotron>
+                        -->
                     </v-flex>
                 </v-layout>
             </v-container>
@@ -118,13 +135,19 @@
                             <v-expansion-panel-content>
                                 <div slot="header">상세설명</div>
                                 <v-card>
-                                    <v-card-text v-html="service_api['DTLCONT']"></v-card-text>
+                                    <v-card-text
+                                            v-html="service_api['DTLCONT']"
+                                            class="proto-description"
+                                    ></v-card-text>
                                 </v-card>
                             </v-expansion-panel-content>
                             <v-expansion-panel-content>
                                 <div slot="header">주의사항</div>
                                 <v-card>
-                                    <v-card-text v-html="service_api['NOTICE']"></v-card-text>
+                                    <v-card-text
+                                            v-html="service_api['NOTICE']"
+                                            class="proto-description"
+                                    ></v-card-text>
                                 </v-card>
                             </v-expansion-panel-content>
                         </v-expansion-panel>
@@ -253,5 +276,10 @@
 </script>
 
 <style scoped>
-
+    .proto-description * {
+        background-color: white !important;
+    }
+    .proto-description strong {
+        background-color: white !important;
+    }
 </style>

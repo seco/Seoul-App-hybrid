@@ -17,3 +17,4 @@ Route::get('/', function () {
 
 Route::post('/services', 'ServiceController@servicies');
 Route::post('/service', 'ServiceController@service');
+Route::post('/recommend', 'ServiceController@recommendService');

@@ -41,4 +41,12 @@ class ServiceController extends Controller
         $service = Service::where('SVCID', $SVCID)->first();
         return $service->toJson(JSON_UNESCAPED_UNICODE);
     }
+
+    public function recommendService(Request $request)
+    {
+        $services = Service::where('SVCSTATNM', '접수중')->get();
+        $random = $services->random(5);
+
+        return $random;
+    }
 }
