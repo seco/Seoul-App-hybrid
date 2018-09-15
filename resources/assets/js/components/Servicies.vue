@@ -15,21 +15,35 @@
             </v-layout>
         </v-toolbar>
         <v-content>
-            <!--
             <v-container style="padding:0;">
                 <v-layout wrap>
                     <v-flex xs12>
-                        <v-carousel>
+                        <v-carousel class="elevation-0" hide-delimiters style="height: 300px; ">
                             <v-carousel-item
                                     v-for="(item, i) in recommend"
                                     :key="i"
-                                    :src="item.SVCURL"
-                            ></v-carousel-item>
+                                    :src="item['IMG_URL']"
+                                    @click="goToDetail( item['SVCID'] )"
+                            >
+                                <v-layout
+                                        pa-3
+                                        column
+                                        fill-height
+                                        class="white--text"
+                                        style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 140px);"
+                                >
+                                    <v-spacer></v-spacer>
+                                    <v-flex shrink>
+                                        <div class="body-1">{{ item['AREANM'] }}</div>
+                                        <div class="subheading">{{ item['SVCNM'] }}</div>
+                                    </v-flex>
+                                </v-layout>
+                            </v-carousel-item>
                         </v-carousel>
                     </v-flex>
                 </v-layout>
             </v-container>
-            -->
+
             <v-container style="background-color: #fff;">
                 <v-layout wrap align-center>
                     <v-flex xs12>
@@ -76,7 +90,12 @@
                                 <v-list-tile
                                         :key="item.SVCID"
                                         @click="goToDetail( item['SVCID'] )"
+                                        avatar
                                 >
+                                    <v-list-tile-avatar>
+                                        <img :src="item['IMG_URL']">
+                                    </v-list-tile-avatar>
+
                                     <v-list-tile-content>
                                         <v-list-tile-title>{{ item['SVCNM'] }}</v-list-tile-title>
                                         <v-list-tile-sub-title>({{ item['AREANM'] }}) {{ item['PLACENM'] }}</v-list-tile-sub-title>
@@ -218,9 +237,14 @@
             // 추천상품
             axios.post('/recommend')
                 .then(function (response) {
-                    console.log(response);
+                    console.log( response.data );
 
-                    self.recommend.push( response.data.data );
+
+                    for (var idx in response.data) {
+                        self.recommend.push( response.data[idx] );
+                    }
+
+                    console.log( self.recommend );
                 })
                 .catch(function (error) {
                     console.log(error);
