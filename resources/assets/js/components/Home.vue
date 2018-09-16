@@ -120,10 +120,12 @@
         },
         methods: {
             goToServices : function(category) {
-                console.log(category);
                 this.$store.state.category = category;
-                console.log(this.$store.state.category);
-                this.$router.push('services');
+                if( category === '즐겨찾기' ) {
+                    this.$router.push('bookmark');
+                } else {
+                    this.$router.push('services');
+                }
             }
         }
     }

@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-toolbar app color="#598bf9">
+        <v-toolbar app style="background-image: linear-gradient(to left,#ff63a6,#6e8af8 50%,#11d9c3 99%);">
             <v-layout row wrap>
                 <v-flex xs6 style="text-align:left;">
                     <router-link to="/" style="text-decoration: none;">
@@ -18,7 +18,7 @@
             <v-container style="padding:0;">
                 <v-layout wrap>
                     <v-flex xs12>
-                        <v-carousel class="elevation-0" hide-delimiters style="height: 300px; ">
+                        <v-carousel class="elevation-0" hide-delimiters style="height: 300px; background-color: #eee;-">
                             <v-carousel-item
                                     v-for="(item, i) in recommend"
                                     :key="i"

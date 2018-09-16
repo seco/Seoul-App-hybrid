@@ -23,11 +23,12 @@ import App from './components/App.vue';
 
 Vue.use(Vuetify);
 
-new Vue({
+window.app = new Vue({
   el: '#app',
   render: h => h(App),
   store,
-  router
+  router,
+  bus: new Vue()
 });
 
 router.push({ path: '/' });

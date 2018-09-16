@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-toolbar app color="#598bf9">
+        <v-toolbar app color="#6987f7">
             <v-layout row wrap>
                 <v-flex xs6 style="text-align:left;">
                     <v-btn icon flat @click="$router.go(-1)">
@@ -29,11 +29,21 @@
                                     fill-height
                                     class="white--text"
                                     style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 140px);"
+
                             >
                                 <v-spacer></v-spacer>
                                 <v-flex shrink>
                                     <div class="body-1">{{ service_api['AREANM'] }}</div>
-                                    <div class="subheading">{{ service_api['SVCNM'] }}</div>
+
+                                    <v-layout align-end justify-space-between row fill-height>
+                                        <div class="subheading"
+                                        >{{ service_api['SVCNM'] }}</div>
+                                        <v-btn icon style="margin:0;"
+                                               @click="toggleBookmark(service_api['SVCID'])">
+                                            <v-icon color="#ff6161" v-if="isBookmarked">favorite</v-icon>
+                                            <v-icon color="#f5f5f5" v-else>favorite_border</v-icon>
+                                        </v-btn>
+                                    </v-layout>
                                 </v-flex>
                             </v-layout>
                         </v-img>
@@ -164,7 +174,7 @@
                     </v-flex>
                     <v-flex xs6>
                         <a target="_blank" :href="service['SVCURL']" style="text-decoration: none;">
-                            <v-btn block flat dark depressed style="margin:0; height: 48px; background-color: #598bf9; border-radius: 0;">
+                            <v-btn block flat dark depressed style="margin:0; height: 48px; background-color: #6987f7; border-radius: 0;">
                                 <v-icon small>bookmark</v-icon>예약하기
                             </v-btn>
                         </a>
@@ -185,6 +195,7 @@
                 gradient: 'to top right, rgba(0, 0, 0, 0.7), rgba( 0, 0, 0, 0.7)',
                 isLoading: true,
                 isMapDataExsist: true,
+                isBookmarked: false,
             }
         },
         created: function() {
@@ -207,6 +218,9 @@
                     axios.get(API_URL + self.service['SVCID'])
                         .then(function (response) {
                             self.service_api = response.data.ListPublicReservationDetail.row[0];
+
+                            window.seoulApp.toggleBookmark(self.service['SVCID'], false);
+                            window.seoulApp.toggleBookmark(self.service['SVCID'], false);
 
                             console.log(self.service_api)
 
@@ -271,6 +285,15 @@
                 .catch(function (error) {
                     console.log(error);
                 });
+        },
+        methods: {
+            toggleBookmark : function(SVCID) {
+                window.seoulApp.toggleBookmark(SVCID, true);
+            },
+            setIsBookmarked : function(is) {
+                console.log(is);
+                this.isBookmarked = is;
+            }
         }
     }
 </script>
