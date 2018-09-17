@@ -112,14 +112,22 @@
                 <v-layout>
                     <v-flex xs12 flat style="">
                         <v-btn
+                                v-if="isGetMore == 0"
                                 style="margin: 0; height: 44px;"
                                 depressed
                                 block
                                 @click="getMoreData">
-                            <span v-if="isGetMore == 0">더보기</span>
-                            <span v-else-if="isGetMore == 1"><v-progress-circular indeterminate color="primary"></v-progress-circular></span>
-                            <span v-else>더이상 데이터가 없습니다</span>
+                            더보기
                         </v-btn>
+                        <v-btn
+                                v-else-if="isGetMore == 1"
+                                style="margin: 0; height: 44px;"
+                                depressed
+                                block
+                                @click="getMoreData">
+                            <v-progress-circular indeterminate color="primary"></v-progress-circular>
+                        </v-btn>
+                        <span v-else></span>
                     </v-flex>
                 </v-layout>
             </v-container>
@@ -323,7 +331,7 @@
                             self.ServicesData.push( response.data.data[idx] );
                         }
 
-                        if( response.data.data.length === 0 ) {
+                        if( response.data.data.length < 25 ) {
                             self.isGetMore = 2;
                         }
                     })
