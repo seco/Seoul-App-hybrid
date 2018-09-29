@@ -227,20 +227,6 @@
 
             var jArray = new Array();
             var self = this;
-            axios.post('/services?page=' + this.page, {MAXCLASSNM: this.$store.state.category, page: this.page})
-                .then(function (response) {
-
-                    console.log(response);
-
-                    for (var idx in response.data.data) {
-                        jArray.push( response.data.data[idx] );
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-
-                    return [];
-                });
 
             // 추천상품
             axios.post('/recommend')
@@ -256,6 +242,21 @@
                 })
                 .catch(function (error) {
                     console.log(error);
+                    return [];
+                });
+
+            axios.post('/services?page=' + this.page, {MAXCLASSNM: this.$store.state.category, page: this.page})
+                .then(function (response) {
+
+                    console.log(response);
+
+                    for (var idx in response.data.data) {
+                        jArray.push( response.data.data[idx] );
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+
                     return [];
                 });
 

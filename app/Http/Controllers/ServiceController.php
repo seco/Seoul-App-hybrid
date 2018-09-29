@@ -28,6 +28,8 @@ class ServiceController extends Controller
         //$services = $services->where('SVCSTATNM', '접수중')->orWhere('SVCSTATNM', '안내중')->get();
 
         $servicies = $servicies
+            ->where('SVCID', 'LIKE', "S%")
+            ->where('IMG_URL', '!=' , "''")
             ->where('SVCSTATNM', '접수중')
             //->whereIn('SVCSTATNM', ['접수중', '안내중'])
             ->paginate(25);
@@ -44,7 +46,10 @@ class ServiceController extends Controller
 
     public function recommendService(Request $request)
     {
-        $services = Service::where('SVCSTATNM', '접수중')->get();
+        $services = Service::where('SVCSTATNM', '접수중')
+            ->where('SVCID', 'LIKE', "S%")
+            ->where('IMG_URL', '!=' , "''")
+            ->get();
         $random = $services->random(5);
 
         return $random;
